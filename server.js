@@ -9,6 +9,10 @@ import compression from "compression";
 import cors from "cors";
 import cspOption from "./csp-options.js";
 import { getProduit } from "./model/produit.js";
+// var SSE = require("express-sse");
+import SSE from "express-sse";
+var sse = new SSE({ commande: "getCommande()" });
+
 import {
   getPanier,
   addToPanier,
@@ -87,6 +91,8 @@ app.use(
   })
 );
 // Routes
+
+app.get("/stream", sse.init);
 
 // @desc   Read Register page
 app.get("/register", isUnAuthinticate, (request, response) => {
@@ -191,6 +197,8 @@ app.get("/logout", (request, response) => {
 
 // Route de la page du menu
 app.get("/", async (request, response) => {
+  sse.send("content");
+
   response.render("menu", {
     title: "Menu",
     produit: await getProduit()
@@ -247,10 +255,11 @@ app.get(
   // isAdmin,
   async (request, response) => {
     response.render("commande", {
-      title: "Commandes",
-      commande: await getCommande(),
-      etatCommande: await getEtatCommande()
+      title: "Commandes"
+      // commande: await getCommande()
+      // etatCommande: await getEtatCommande()
     });
+    sse.send({ commande: await getCommande() });
   }
 );
 

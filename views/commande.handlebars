@@ -1,7 +1,7 @@
 <section>
     <h2>Commandes</h2>
 
-    <ul class="commande">
+    {{!-- <ul class="commande">
         {{#each commande}}
             <li data-id-commande="{{this.id_commande}}">
                 <div class="info">
@@ -33,7 +33,15 @@
                 </table>
             </li>
         {{/each}}
-    </ul>
+    </ul> --}}
 </section>
 
+<div class="content-placeholder"></div>
+
 <script type="module" src="./js/commande.js"></script>
+
+<script id="handlebars-demo" type="text/x-handlebars-template">
+	<div>
+		My name is {{name}}. I am a {{occupation}}.	
+	</div>
+</script>   
