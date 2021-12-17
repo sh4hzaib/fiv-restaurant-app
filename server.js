@@ -177,7 +177,11 @@ app.post("/login", async (request, response) => {
   } else if (username == user[0].username && password == user[0].password) {
     request.session.isLoggedIn = true;
     request.session.isLoggeduser = user[0];
-    return response.redirect("/");
+    return response.render("menu", {
+      title: "Menu",
+      produit: await getProduit(),
+      user: true
+    });
   } else {
     response.render("Auth/login", {
       title: "login",
@@ -201,7 +205,8 @@ app.get("/logout", (request, response) => {
 app.get("/", async (request, response) => {
   response.render("menu", {
     title: "Menu",
-    produit: await getProduit()
+    produit: await getProduit(),
+    user: false
   });
 });
 
