@@ -1,6 +1,12 @@
 <section>
     <h2>Menu</h2>
 
+{{#if user}}
+ <h3>
+     welcome
+</h3>
+{{/if}}
+   
     <ul class="menu">
         {{#each produit}}
             <li data-id-produit="{{this.id_produit}}">
