@@ -264,17 +264,13 @@ app.get("/updateCommandes", async (request, response) => {
     lastname: "Katz"
   });
 });
-app.get(
-  "/commandes",
-  //  isAdmin,
-  async (request, response) => {
-    response.render("commande", {
-      title: "Commandes",
-      commande: await getCommande(),
-      etatCommande: await getEtatCommande()
-    });
-  }
-);
+app.get("/commandes", isAdmin, async (request, response) => {
+  response.render("commande", {
+    title: "Commandes",
+    commande: await getCommande(),
+    etatCommande: await getEtatCommande()
+  });
+});
 
 // Route pour soumettre le panier
 app.post("/commande", async (request, response) => {
