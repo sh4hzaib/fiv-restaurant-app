@@ -9,9 +9,8 @@ import compression from "compression";
 import cors from "cors";
 import cspOption from "./csp-options.js";
 import { getProduit } from "./model/produit.js";
-// var SSE = require("express-sse");
 import SSE from "express-sse";
-var sse = new SSE({ commande: "getCommande()" });
+var sse = new SSE();
 
 import {
   getPanier,
@@ -267,7 +266,6 @@ app.get(
       commande: await getCommande(),
       etatCommande: await getEtatCommande()
     });
-    // sse.send({ commande: await getCommande() });
   }
 );
 
@@ -276,7 +274,7 @@ app.post("/commande", async (request, response) => {
   if (await validatePanier()) {
     addCommande();
     response.sendStatus(201);
-    sse.send("content");
+    sse.send("update");
   } else {
     response.sendStatus(400);
   }
