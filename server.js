@@ -212,7 +212,9 @@ app.get("/", async (request, response) => {
 
 // Route de la page du panier
 app.get("/panier", isAuthinticate, async (request, response) => {
+  console.log(request.session);
   let panier = await getPanier();
+  console.log(panier);
   response.render("panier", {
     title: "Panier",
     produit: panier,
@@ -264,7 +266,7 @@ app.get("/updateCommandes", async (request, response) => {
 });
 app.get(
   "/commandes",
-  // isAdmin,
+  //  isAdmin,
   async (request, response) => {
     response.render("commande", {
       title: "Commandes",
@@ -292,7 +294,7 @@ app.patch("/commande", async (request, response) => {
     (await validateId(request.body.idEtatCommande))
   ) {
     modifyEtatCommande(request.body.idCommande, request.body.idEtatCommande);
-
+    sse.send("event");
     response.sendStatus(200);
   } else {
     response.sendStatus(400);
