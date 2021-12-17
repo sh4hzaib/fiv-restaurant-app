@@ -9,6 +9,7 @@ var es = new EventSource("/stream");
 es.onmessage = function(event) {
   console.log(event.data);
   commande = event.data;
+  location.reload();
 };
 
 /**

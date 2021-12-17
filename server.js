@@ -60,7 +60,10 @@ app.engine(
   "handlebars",
   expressHandlebars({
     helpers: {
-      equals: (valeur1, valeur2) => valeur1 === valeur2
+      equals: (valeur1, valeur2) => valeur1 === valeur2,
+      caps: () => {
+        return { name: [{ firstname: "shah" }, { firstname: "zaib" }] };
+      }
     }
   })
 );
@@ -197,8 +200,6 @@ app.get("/logout", (request, response) => {
 
 // Route de la page du menu
 app.get("/", async (request, response) => {
-  sse.send("content");
-
   response.render("menu", {
     title: "Menu",
     produit: await getProduit()
@@ -250,16 +251,23 @@ app.delete("/panier", async (request, response) => {
 });
 
 // Route de la page des commandes
+
+app.get("/updateCommandes", async (request, response) => {
+  response.json({
+    firstname: "Yehuda",
+    lastname: "Katz"
+  });
+});
 app.get(
   "/commandes",
   // isAdmin,
   async (request, response) => {
     response.render("commande", {
-      title: "Commandes"
-      // commande: await getCommande()
-      // etatCommande: await getEtatCommande()
+      title: "Commandes",
+      commande: await getCommande(),
+      etatCommande: await getEtatCommande()
     });
-    sse.send({ commande: await getCommande() });
+    // sse.send({ commande: await getCommande() });
   }
 );
 
@@ -268,6 +276,7 @@ app.post("/commande", async (request, response) => {
   if (await validatePanier()) {
     addCommande();
     response.sendStatus(201);
+    sse.send("content");
   } else {
     response.sendStatus(400);
   }
