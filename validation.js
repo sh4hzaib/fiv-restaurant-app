@@ -16,7 +16,7 @@ export const validateId = (id) => {
  * Valide le panier dans la base de données du serveur.
  * @returns Une valeur booléenne indiquant si le panier est valide ou non.
  */
-export const validatePanier = async () => {
+export const validatePanier = async() => {
     let panier = await getPanier();
     return panier.length > 0;
 }

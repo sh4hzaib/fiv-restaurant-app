@@ -5,7 +5,7 @@ let boutons = document.querySelectorAll('.menu input[type=button]');
  * Ajoute un produit dans le panier sur le serveur.
  * @param {MouseEvent} event Objet d'information sur l'événement.
  */
-const addToPanier = async (event) => {
+const addToPanier = async(event) => {
     let data = {
         idProduit: parseInt(event.target.parentNode.dataset.idProduit)
     }
